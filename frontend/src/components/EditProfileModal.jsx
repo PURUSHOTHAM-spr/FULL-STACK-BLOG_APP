@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import axios from "axios";
 import { useAuth } from "../store/AuthStore";
 import { toast } from "react-hot-toast";
-import { API_BASE_URL } from "../config/apiConfig.js";
 
 function EditProfileModal({ isOpen, onClose }) {
   const currentUser = useAuth((state) => state.currentUser);
@@ -51,7 +50,7 @@ function EditProfileModal({ isOpen, onClose }) {
 
     try {
       const res = await axios.put(
-        `${API_BASE_URL}/common-api/profile`,
+        "http://localhost:4000/common-api/profile",
         formData,
         {
           withCredentials: true,

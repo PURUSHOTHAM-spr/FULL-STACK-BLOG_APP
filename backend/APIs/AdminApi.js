@@ -34,7 +34,7 @@ adminRoute.get( "/articles/author/:authorId",verifyToken(["ADMIN"]),checkAdmin,a
 
       const articles = await ArticleModel.find({
         author: authorId,
-        isArticleActive: true,}).populate("author", "firstname lastname");
+        isArticleActive: true,}).populate("author", "firstName lastName");
 
       res.status(200).json({message: "Author articles fetched successfully",payload: articles, });
     } catch (err) {
@@ -78,5 +78,3 @@ adminRoute.put(
     }
   }
 );
-
-

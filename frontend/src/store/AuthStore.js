@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import axios from "axios";
-import { API_BASE_URL } from "../config/apiConfig.js";
 
 export const useAuth = create((set) => ({
   currentUser: null,
@@ -16,7 +15,7 @@ export const useAuth = create((set) => ({
       set({ loading: true, error: null });
 
       const res = await axios.post(
-        `${API_BASE_URL}/common-api/login`,
+        "http://localhost:4000/common-api/login",
         userCredObj,
         { withCredentials: true }
       );
@@ -45,7 +44,7 @@ export const useAuth = create((set) => ({
       set({ loading: true, error: null });
 
       await axios.get(
-        `${API_BASE_URL}/common-api/logout`,
+        "http://localhost:4000/common-api/logout",
         { withCredentials: true }
       );
 
@@ -71,7 +70,7 @@ export const useAuth = create((set) => ({
       set({ loading: true });
 
       const res = await axios.get(
-        `${API_BASE_URL}/common-api/check-auth`,
+        "http://localhost:4000/common-api/check-auth",
         { withCredentials: true }
       );
 

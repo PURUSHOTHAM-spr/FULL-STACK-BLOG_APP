@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { API_BASE_URL } from "../config/apiConfig.js";
 
 import {
   formCard,
@@ -48,7 +47,7 @@ function EditArticle() {
         content: data.content,
         author: article.author?._id || article.author,
       };
-      await axios.put(`${API_BASE_URL}/author-api/articles`, payload, { withCredentials: true });
+      await axios.put("http://localhost:4000/author-api/articles", payload, { withCredentials: true });
       toast.success("Article updated successfully!");
       navigate("/author-profile/articles");
     } catch (err) {

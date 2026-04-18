@@ -2,7 +2,6 @@ import { useParams, useLocation, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../store/AuthStore";
-import { API_BASE_URL } from "../config/apiConfig.js";
 
 import {
   articlePageWrapper,
@@ -46,7 +45,7 @@ function ArticleByID() {
       if (!article) setLoading(true);
 
       try {
-        const res = await axios.get(`${API_BASE_URL}/user-api/articles/${id}`, { withCredentials: true });
+        const res = await axios.get(`http://localhost:4000/user-api/articles/${id}`, { withCredentials: true });
 
         setArticle(res.data.payload);
       } catch (err) {
@@ -85,14 +84,14 @@ function ArticleByID() {
 
     try {
       if (isFollowing) {
-        await axios.put(`${API_BASE_URL}/user-api/users/${article.author._id}/unfollow`, {}, { withCredentials: true });
+        await axios.put(`http://localhost:4000/user-api/users/${article.author._id}/unfollow`, {}, { withCredentials: true });
         setIsFollowing(false);
         // Optimistically update article followers
         setArticle(prev => ({
           ...prev, author: { ...prev.author, followers: prev.author.followers.filter(id => id !== myId) }
         }));
       } else {
-        await axios.put(`${API_BASE_URL}/user-api/users/${article.author._id}/follow`, {}, { withCredentials: true });
+        await axios.put(`http://localhost:4000/user-api/users/${article.author._id}/follow`, {}, { withCredentials: true });
         setIsFollowing(true);
         // Optimistically update article followers
         setArticle(prev => ({

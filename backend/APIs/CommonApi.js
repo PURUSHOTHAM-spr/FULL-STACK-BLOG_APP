@@ -8,6 +8,8 @@ import { uploadToCloudinary } from "../config/cloudinaryUpload.js";
 import cloudinary from "../config/cloudinary.js";
 export const commonRouter = exp.Router();
 
+const isProd = process.env.NODE_ENV === "production";
+
 //login
 commonRouter.post("/login", async (req, res, next) => {
   try {
@@ -18,8 +20,8 @@ commonRouter.post("/login", async (req, res, next) => {
     //save tokan as httpOnly cookie
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "lax",
-      secure: false,
+      sameSite: isProd ? "none" : "lax",
+      secure: isProd,
     });
     //send res
     res.status(200).json({ message: "login success", payload: user });
@@ -33,8 +35,8 @@ commonRouter.get("/logout", (req, res) => {
   // Clear the cookie named 'token'
   res.clearCookie("token", {
     httpOnly: true, 
-    secure: false, 
-    sameSite: "lax", 
+    secure: isProd, 
+    sameSite: isProd ? "none" : "lax", 
   });
 
   res.status(200).json({ message: "Logged out successfully" });
@@ -54,16 +56,15 @@ commonRouter.get("/check-auth", verifyToken([]), async (req, res) => {
 });
 
 //Change password(Protected route)
-commonRouter.put("/change-password", async (req, res) => {
+commonRouter.put("/change-password", verifyToken([]), async (req, res) => {
   //get current password and new password
-  const { role, email, currentPassword, newPassword } = req.body;
+  const { currentPassword, newPassword } = req.body;
   // Prevent same password
   if (currentPassword === newPassword) {
     return res.status(400).json({ message: "newPassword must be different from currentPassword" });
   }
 
-  // Find user by email (works for USER, AUTHOR, ADMIN — all same collection)
-  const account = await UserTypeModel.findOne({ email });
+  const account = await UserTypeModel.findById(req.user.userId);
   if (!account) {
     return res.status(404).json({ message: "Account not found" });
   }
