@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: blog-app-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    disk:
+      name: blog-data
+      mountPath: /data
+      sizeGB: 1
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        fromService:
+          type: web
+          property: port
+      - key: DB_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLOUD_NAME
+        sync: false
+      - key: API_KEY
+        sync: false
+      - key: API_SECRET
+        sync: false
+      - key: CLOUDINARY_URL
+        sync: false
