@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router";
+import { BASE_URL } from "../config/apiConfig.js";
 
 import {
   formCard,
@@ -41,7 +42,7 @@ function WriteArticle() {
 
   try {
     await axios.post(
-      "http://localhost:4000/author-api/articles",
+      `${BASE_URL}/author-api/articles`,
       articleObj,
       { withCredentials: true }
     );

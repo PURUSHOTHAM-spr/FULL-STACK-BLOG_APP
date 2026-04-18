@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../config/apiConfig.js';
 
 function Stats() {
   const [stats, setStats] = useState({ followers: 0, posts: 0, rating: 0 });
@@ -9,7 +10,7 @@ function Stats() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/author-api/stats", { withCredentials: true });
+        const res = await axios.get(`${BASE_URL}/author-api/stats`, { withCredentials: true });
         setStats(res.data.payload);
       } catch (err) {
         console.error("Error fetching stats:", err);

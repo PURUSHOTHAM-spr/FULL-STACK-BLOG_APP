@@ -2,6 +2,7 @@ import { useParams, useLocation, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../store/AuthStore";
+import { BASE_URL } from "../config/apiConfig.js";
 
 import {
   articlePageWrapper,
@@ -45,7 +46,7 @@ function ArticleByID() {
       if (!article) setLoading(true);
 
       try {
-        const res = await axios.get(`http://localhost:4000/user-api/articles/${id}`, { withCredentials: true });
+        const res = await axios.get(`${BASE_URL}/user-api/articles/${id}`, { withCredentials: true });
 
         setArticle(res.data.payload);
       } catch (err) {
@@ -69,7 +70,7 @@ function ArticleByID() {
   // delete article
   const deleteArticle = async () => {
     try {
-      await axios.patch(`http://localhost:4000/author-api/articles/${id}/status`, { isArticleActive: false }, { withCredentials: true });
+      await axios.patch(`${BASE_URL}/author-api/articles/${id}/status`, { isArticleActive: false }, { withCredentials: true });
 
       navigate("/author-profile");
     } catch (err) {
@@ -84,14 +85,14 @@ function ArticleByID() {
 
     try {
       if (isFollowing) {
-        await axios.put(`http://localhost:4000/user-api/users/${article.author._id}/unfollow`, {}, { withCredentials: true });
+        await axios.put(`${BASE_URL}/user-api/users/${article.author._id}/unfollow`, {}, { withCredentials: true });
         setIsFollowing(false);
         // Optimistically update article followers
         setArticle(prev => ({
           ...prev, author: { ...prev.author, followers: prev.author.followers.filter(id => id !== myId) }
         }));
       } else {
-        await axios.put(`http://localhost:4000/user-api/users/${article.author._id}/follow`, {}, { withCredentials: true });
+        await axios.put(`${BASE_URL}/user-api/users/${article.author._id}/follow`, {}, { withCredentials: true });
         setIsFollowing(true);
         // Optimistically update article followers
         setArticle(prev => ({
@@ -114,7 +115,7 @@ function ArticleByID() {
 
     try {
       const res = await axios.put(
-        "http://localhost:4000/user-api/articles",
+        `${BASE_URL}/user-api/articles`,
         {
           user: user?._id || user?.userId, 
           articleId: article._id,

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { useAuth } from "../store/AuthStore";
+import { BASE_URL } from "../config/apiConfig.js";
 
 import {
   articleCardClass,
@@ -29,7 +30,7 @@ function AuthorArticles() {
       setLoading(true);
 
       try {
-        const res = await axios.get(`http://localhost:4000/author-api/articles`, { withCredentials: true });
+        const res = await axios.get(`${BASE_URL}/author-api/articles`, { withCredentials: true });
 
         setArticles(res.data.payload);
       } catch (err) {

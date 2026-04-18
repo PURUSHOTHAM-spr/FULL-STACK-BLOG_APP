@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { BASE_URL } from "../config/apiConfig.js";
 
 import {
   articleGrid,
@@ -29,8 +30,8 @@ function UserProfile() {
       setError(null);
       try {
         const endpoint = activeTab === "following" 
-          ? "http://localhost:4000/user-api/articles/following" 
-          : "http://localhost:4000/user-api/articles";
+          ? `${BASE_URL}/user-api/articles/following` 
+          : `${BASE_URL}/user-api/articles`;
         const res = await axios.get(endpoint, { withCredentials: true });
         setArticles(res.data.payload);
       } catch (err) {
@@ -53,7 +54,7 @@ function UserProfile() {
 
     try {
       if (isFollowing) {
-        await axios.put(`http://localhost:4000/user-api/users/${articleObj.author._id}/unfollow`, {}, { withCredentials: true });
+        await axios.put(`${BASE_URL}/user-api/users/${articleObj.author._id}/unfollow`, {}, { withCredentials: true });
         // Optimistic update
         setArticles(prev => prev.map(a => {
           if (a.author._id === articleObj.author._id) {
@@ -62,7 +63,7 @@ function UserProfile() {
           return a;
         }));
       } else {
-        await axios.put(`http://localhost:4000/user-api/users/${articleObj.author._id}/follow`, {}, { withCredentials: true });
+        await axios.put(`${BASE_URL}/user-api/users/${articleObj.author._id}/follow`, {}, { withCredentials: true });
         setArticles(prev => prev.map(a => {
           if (a.author._id === articleObj.author._id) {
             return { ...a, author: { ...a.author, followers: [...(a.author.followers || []), myId] } };
