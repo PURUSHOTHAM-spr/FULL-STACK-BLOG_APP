@@ -13,11 +13,13 @@ config(); //process.env
 
 //Create express application
 const app = exp();
-//use cors middleware
-app.use(cors({
-  origin:"*",
-  credentials: true
-}));
+
+app.use(
+  cors({
+    origin: "https://full-stack-blog-app-iota.vercel.app",
+    credentials: true,
+  })
+);
 
 //add body parser middleware
 app.use(exp.json());
