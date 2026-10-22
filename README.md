@@ -143,6 +143,10 @@ the production MongoDB instance.
 - **Vercel frontend:** configure `VITE_API_BASE_URL` as a build-time variable.
   The current production value is
   `https://full-stack-blog-app-2.onrender.com`.
+  This variable must be configured for every Vercel production and preview
+  environment, then redeployed. The source also uses this Render URL as the
+  production-only fallback when the variable is absent; local development
+  continues to default to `http://localhost:4000`.
 - **Render backend:** configure `PORT` if required by the service, `DB_URL`,
   `JWT_SECRET`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`,
   `CLOUDINARY_API_SECRET`, `NODE_ENV=production`, and `CORS_ORIGINS` for any
