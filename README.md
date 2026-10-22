@@ -89,11 +89,17 @@ FULL-STACK-BLOG_APP/
    ```env
    PORT=4000
    DB_URL=your_mongodb_connection_string
-   SECRET_KEY=your_jwt_secret_key
+   JWT_SECRET=your_jwt_secret
    CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
    CLOUDINARY_API_KEY=your_cloudinary_api_key
    CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+   NODE_ENV=development
+   CORS_ORIGINS=http://localhost:5173
    ```
+   Use `backend/.env.example` as the variable reference. The legacy
+   `CLOUD_NAME`, `API_KEY`, and `API_SECRET` names remain supported temporarily
+   for existing deployments, but new deployments should use the canonical
+   `CLOUDINARY_*` names.
 4. Start the backend dev server:
    ```bash
    npm start
@@ -108,11 +114,79 @@ FULL-STACK-BLOG_APP/
    ```bash
    npm install
    ```
-3. Edit the API URL configuration in `src/config/apiConfig.js` if necessary (defaults to standard API backend endpoints).
+3. Create `frontend/.env` from `frontend/.env.example`. Set
+   `VITE_API_BASE_URL` to `http://localhost:4000` for local development or to
+   `https://full-stack-blog-app-2.onrender.com` for the current production
+   backend. Vite exposes `VITE_*` values to browser code, so do not put secrets
+   in this file.
 4. Start the Vite dev server:
    ```bash
    npm run dev
    ```
+
+### Validation commands
+
+Run these commands from the indicated package directory:
+
+```bash
+cd backend && npm test
+cd ../frontend && npm test
+cd ../frontend && npm run build
+```
+
+Backend tests use Vitest, Supertest, and isolated in-memory model doubles;
+frontend tests use Vitest, jsdom, and Testing Library. Tests do not connect to
+the production MongoDB instance.
+
+### Deployment environment variables
+
+- **Vercel frontend:** configure `VITE_API_BASE_URL` as a build-time variable.
+  The current production value is
+  `https://full-stack-blog-app-2.onrender.com`.
+- **Render backend:** configure `PORT` if required by the service, `DB_URL`,
+  `JWT_SECRET`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`,
+  `CLOUDINARY_API_SECRET`, `NODE_ENV=production`, and `CORS_ORIGINS` for any
+  additional explicitly approved frontend origins. The current production
+  Vercel origin is allowed by default.
+
+Real `.env` files are ignored by Git. Commit only the safe `.env.example`
+files.
+
+### Docker Compose
+
+Docker Compose runs the frontend and backend containers locally while keeping
+MongoDB Atlas and Cloudinary external. Do not add database credentials or real
+`.env` files to the repository.
+
+From the repository root, provide the backend variables through the shell or
+an ignored root `.env` file:
+
+```bash
+DB_URL='mongodb+srv://...'
+JWT_SECRET='use-a-long-random-value'
+CLOUDINARY_CLOUD_NAME='your-cloud-name'
+CLOUDINARY_API_KEY='your-api-key'
+CLOUDINARY_API_SECRET='your-api-secret'
+```
+
+Start the containers with:
+
+```bash
+docker compose up --build
+```
+
+The frontend is served at `http://localhost:8080`; the backend is published at
+`http://localhost:4000`. `VITE_API_BASE_URL` defaults to
+`http://localhost:4000` because the browser cannot resolve the internal
+Compose service name. Override it when the backend is exposed at another
+browser-visible URL:
+
+```bash
+VITE_API_BASE_URL='http://localhost:4000' docker compose up --build
+```
+
+Do not set `VITE_API_BASE_URL` to `http://backend:4000`; that hostname is
+available only inside the Compose network.
 
 ---
 

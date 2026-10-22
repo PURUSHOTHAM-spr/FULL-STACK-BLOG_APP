@@ -1,13 +1,20 @@
 import jwt from "jsonwebtoken";
+import { UserTypeModel } from "../Models/UserModel.js";
 
 export const verifyToken = (roles = []) => {
-  return (req, res, next) => {
+  return async (req, res, next) => {
 
     let token;
 
     // check Authorization header
     if (req.headers.authorization) {
-      token = req.headers.authorization.split(" ")[1];
+      const [scheme, value] = req.headers.authorization.split(" ");
+      if (scheme !== "Bearer" || !value) {
+        return res.status(401).json({
+          message: "Invalid authorization header",
+        });
+      }
+      token = value;
     }
 
     // fallback to cookie
@@ -25,9 +32,28 @@ export const verifyToken = (roles = []) => {
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      req.user = decoded;
+      const user = await UserTypeModel.findById(decoded.userId).select(
+        "_id role isActive",
+      );
 
-      if (roles.length && !roles.includes(decoded.role)) {
+      if (!user) {
+        return res.status(401).json({
+          message: "User not found",
+        });
+      }
+
+      if (user.isActive === false) {
+        return res.status(403).json({
+          message: "Account is blocked",
+        });
+      }
+
+      req.user = {
+        ...decoded,
+        role: user.role,
+      };
+
+      if (roles.length && !roles.includes(user.role)) {
         return res.status(403).json({
           message: "Access denied"
         });

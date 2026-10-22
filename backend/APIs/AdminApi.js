@@ -20,6 +20,10 @@ adminRoute.post("/authenticate", async (req, res, next) => {
   try {
     const result = await authenticate(req.body);
 
+    if (result.user.role !== "ADMIN") {
+      return res.status(403).json({ message: "Admin access required" });
+    }
+
     res.status(200).json({message: "Admin login success",payload: result,});
   } catch (err) {
     next(err);
