@@ -18,7 +18,7 @@ function AuthorProfile() {
     <div className={pageWrapper}>
       <h1 className="text-2xl font-bold mb-4">Welcome, {user?.firstName || "Author"}</h1>
 
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex min-w-0 items-center gap-4 mb-6">
         {user?.profileImageUrl ? (
           <img
             src={user.profileImageUrl}
@@ -30,9 +30,9 @@ function AuthorProfile() {
             {user?.firstName?.charAt(0)?.toUpperCase() || "A"}
           </div>
         )}
-        <div>
-          <div className="flex items-center gap-3">
-            <p className="text-lg font-medium">{user?.firstName} {user?.lastName}</p>
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="max-w-full break-words text-lg font-medium">{user?.firstName} {user?.lastName}</p>
             <button
               onClick={() => setIsEditModalOpen(true)}
               className="px-3 py-1 text-xs font-semibold text-emerald-700 bg-emerald-100 hover:bg-emerald-200 transition-colors rounded-full flex items-center gap-1.5"
@@ -43,12 +43,12 @@ function AuthorProfile() {
               Edit Profile
             </button>
           </div>
-          <p className="text-sm text-gray-500">{user?.email}</p>
+          <p className="max-w-full truncate text-sm text-gray-500" title={user?.email}>{user?.email}</p>
           {/* followers */}
         </div>
       </div>
       {/* Author Navigation */}
-      <div className="flex gap-6 mb-6">
+      <div className="flex gap-4 sm:gap-6 mb-6 overflow-x-auto pb-1">
 
         <NavLink
           to="articles"

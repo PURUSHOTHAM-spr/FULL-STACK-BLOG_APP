@@ -138,6 +138,14 @@ Backend tests use Vitest, Supertest, and isolated in-memory model doubles;
 frontend tests use Vitest, jsdom, and Testing Library. Tests do not connect to
 the production MongoDB instance.
 
+### GitHub Actions CI
+
+The `CI` workflow runs backend tests, frontend tests, and the frontend
+production build on pushes to `main` and pull requests targeting `main`. It
+also validates the existing Dockerfiles without publishing images. CI uses
+test-only placeholder values and does not deploy to Vercel or Render or access
+production credentials.
+
 ### Deployment environment variables
 
 - **Vercel frontend:** configure `VITE_API_BASE_URL` as a build-time variable.
@@ -151,7 +159,8 @@ the production MongoDB instance.
   `JWT_SECRET`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`,
   `CLOUDINARY_API_SECRET`, `NODE_ENV=production`, and `CORS_ORIGINS` for any
   additional explicitly approved frontend origins. The current production
-  Vercel origin is allowed by default.
+  Vercel origin and local `localhost:5173` / `127.0.0.1:5173` origins are
+  allowed by default.
 
 Real `.env` files are ignored by Git. Commit only the safe `.env.example`
 files.

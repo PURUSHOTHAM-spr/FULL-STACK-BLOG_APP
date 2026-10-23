@@ -68,8 +68,17 @@ function Register() {
         }
       }
     } catch (err) {
-     // console.log("err is ", err);
-      setError(err.response?.data?.error || "Registration failed");
+      if (!err.response) {
+        setError(
+          "Cannot reach the backend. Start the backend on http://localhost:4000 and try again.",
+        );
+      } else {
+        setError(
+          err.response.data?.error ||
+            err.response.data?.message ||
+            "Registration failed",
+        );
+      }
     } finally {
       setLoading(false);
     }

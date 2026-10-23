@@ -65,15 +65,15 @@ function AuthorArticles() {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
+    <div className="grid min-w-0 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
       {articles.map((article) => (
-        <div key={article._id} className={`${articleCardClass} flex flex-col`}>
+        <div key={article._id} className={`${articleCardClass} min-w-0 flex flex-col`}>
           <div className="flex flex-col gap-2">
-            <p className={articleMeta}>{article.category}</p>
+            <p className={`${articleMeta} truncate`} title={article.category}>{article.category}</p>
 
             <p className={articleTitle}>{article.title}</p>
 
-            <p className={articleExcerpt}>{article.content.slice(0, 60)}...</p>
+            <p className={articleExcerpt}>{article.content}</p>
 
             <p className={articleMeta}>{formatDate(article.createdAt)}</p>
           </div>

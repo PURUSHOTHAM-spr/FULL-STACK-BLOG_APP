@@ -4,7 +4,7 @@
 
 // ─── Layout ───────────────────────────────────────────
 export const pageBackground = "bg-white min-h-screen"
-export const pageWrapper    = "max-w-5xl mx-auto px-6 py-16"
+export const pageWrapper    = "max-w-5xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-16"
 export const section        = "mb-14"
 
 // ─── Cards ────────────────────────────────────────────
@@ -35,15 +35,15 @@ export const submitBtn      = "w-full bg-[#0066cc] text-white font-semibold py-2
 export const navbarClass        = "bg-white/85 backdrop-blur-xl backdrop-saturate-150 border-b border-[#e8e8ed] px-8 h-[52px] flex items-center sticky top-0 z-50"
 export const navContainerClass  = "max-w-5xl mx-auto w-full flex items-center justify-between"
 export const navBrandClass      = "text-base font-semibold text-[#1d1d1f] tracking-tight"
-export const navLinksClass      = "flex items-center gap-7"
-export const navLinkClass       = "text-xl text-[#6e6e73] hover:text-[#1d1d1f] transition-colors font-normal"
-export const navLinkActiveClass = "text-xl text-[#0066cc] font-medium"
+export const navLinksClass      = "flex items-center gap-4 sm:gap-7 min-w-0"
+export const navLinkClass       = "text-sm sm:text-base text-[#6e6e73] hover:text-[#1d1d1f] transition-colors font-normal whitespace-nowrap"
+export const navLinkActiveClass = "text-sm sm:text-base text-[#0066cc] font-medium whitespace-nowrap"
 
 // ─── Article / Blog ───────────────────────────────────
-export const articleGrid        = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20px bg-[#e8e8ed] border border-[#e8e8ed] rounded-2xl overflow-hidden"
-export const articleCardClass   = "bg-[#f5f5f7] p-7 hover:bg-[#ebebf0] transition-colors duration-200 flex flex-col gap-2.5 cursor-pointer"
-export const articleTitle       = "text-base font-semibold text-[#1d1d1f] leading-snug tracking-tight"
-export const articleExcerpt     = "text-sm text-[#6e6e73] leading-relaxed"
+export const articleGrid        = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+export const articleCardClass   = "min-w-0 bg-[#f5f5f7] p-5 sm:p-7 rounded-2xl hover:bg-[#ebebf0] transition-colors duration-200 flex flex-col gap-2.5 cursor-pointer"
+export const articleTitle       = "min-w-0 break-words line-clamp-2 text-base font-semibold text-[#1d1d1f] leading-snug tracking-tight"
+export const articleExcerpt     = "min-w-0 break-words line-clamp-3 text-sm text-[#6e6e73] leading-relaxed"
 export const articleMeta        = "text-xs text-[#a1a1a6]"
 export const articleBody        = "text-[#6e6e73] leading-[1.85] text-[0.95rem] max-w-2xl"
 export const timestampClass     = "text-xs text-[#a1a1a6] flex items-center gap-1.5"

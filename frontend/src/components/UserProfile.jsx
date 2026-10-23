@@ -125,19 +125,19 @@ function UserProfile() {
             const isOwnPost = articleObj.author?._id === myId;
 
             return (
-              <div className={articleCardClass} key={articleObj._id}>
-                <div className="flex flex-col p-6 h-full bg-white rounded-lg shadow border border-gray-100 hover:shadow-lg transition-all">
+              <div className={`${articleCardClass} min-w-0`} key={articleObj._id}>
+                <div className="flex min-w-0 flex-col p-5 sm:p-6 h-full bg-white rounded-lg shadow border border-gray-100 hover:shadow-lg transition-all">
                   
                   {/* Author Header */}
                   {articleObj.author && (
                     <div className="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
-                      <div className="flex items-center gap-2">
+                      <div className="flex min-w-0 items-center gap-2">
                         <img 
                           src={articleObj.author.profileImageUrl || "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"} 
                           alt="Author" 
                           className="w-8 h-8 rounded-full object-cover"
                         />
-                        <span className="font-semibold text-gray-800 text-sm">
+                        <span className="min-w-0 truncate font-semibold text-gray-800 text-sm" title={`${articleObj.author.firstName} ${articleObj.author.lastName || ''}`}>
                           {articleObj.author.firstName} {articleObj.author.lastName || ''}
                         </span>
                       </div>
@@ -157,7 +157,7 @@ function UserProfile() {
                   {/* Top Content */}
                   <div className="flex-1">
                     <p className={articleTitle}>{articleObj.title}</p>
-                    <p className="text-gray-600 text-sm mb-3">{articleObj.content.slice(0, 80)}...</p>
+                    <p className="line-clamp-3 break-words text-gray-600 text-sm mb-3">{articleObj.content}</p>
                     <p className={timestampClass}>{formatDateIST(articleObj.createdAt)}</p>
                   </div>
 

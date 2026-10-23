@@ -13,9 +13,9 @@ function RootLayout() {
   return (
     <div>
       <Header />
-      <div className="min-h-screen mx-4 sm:mx-36">
+      <main className="min-h-screen w-full max-w-7xl mx-auto px-4 sm:px-8">
         <Outlet />
-      </div>
+      </main>
       <Footer />
     </div>
   );
