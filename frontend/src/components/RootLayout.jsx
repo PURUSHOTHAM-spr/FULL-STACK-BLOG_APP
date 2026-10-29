@@ -11,9 +11,9 @@ function RootLayout() {
     checkAuth();
   }, []);
   return (
-    <div>
+    <div className="min-h-screen bg-slate-50 text-slate-950">
       <Header />
-      <main className="min-h-screen w-full max-w-7xl mx-auto px-4 sm:px-8">
+      <main className="mx-auto min-h-[calc(100vh-4rem)] w-full max-w-7xl px-4 pt-6 sm:px-8 sm:pt-8">
         <Outlet />
       </main>
       <Footer />

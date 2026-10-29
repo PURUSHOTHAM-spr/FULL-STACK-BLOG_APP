@@ -1,39 +1,21 @@
+import { NavLink } from "react-router";
 
-const Footer = () => {
+function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-10 mt-16">
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-        
-        {/* Brand */}
+    <footer className="border-t border-slate-200 bg-slate-950 text-slate-300">
+      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <div>
-          <h2 className="text-2xl font-bold text-white mb-3">BlogApp</h2>
-          <p className="text-sm">
-            Share your thoughts, ideas, and stories with the world. 
-            Built for creators.
-          </p>
+          <p className="text-lg font-black tracking-tight text-white">inkly</p>
+          <p className="mt-1 text-sm text-slate-400">A thoughtful home for your next idea.</p>
         </div>
-
-        {/* Links */}
-        <div>
-          <h3 className="text-lg font-semibold text-white mb-3">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-            <li className="hover:text-white cursor-pointer">Home</li>
-            <li className="hover:text-white cursor-pointer">Blogs</li>
-            <li className="hover:text-white cursor-pointer">About</li>
-            <li className="hover:text-white cursor-pointer">Contact</li>
-          </ul>
+        <div className="flex items-center gap-5 text-sm">
+          <NavLink to="/" className="transition hover:text-white">Home</NavLink>
+          <NavLink to="/register" className="transition hover:text-white">Join the community</NavLink>
         </div>
-
-        
-
       </div>
-
-      {/* Bottom */}
-      <div className="text-center text-sm text-gray-500 mt-10 border-t border-gray-700 pt-5">
-        © {new Date().getFullYear()} BlogApp. All rights reserved.
-      </div>
+      <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-slate-500">© {new Date().getFullYear()} Inkly. Made for meaningful stories.</div>
     </footer>
   );
-};
+}
 
 export default Footer;
